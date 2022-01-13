@@ -3,7 +3,7 @@ import random
 import math
 import os
 
-# Using the string module to create the different levels in the random break code
+
 LevelOne = list(string.ascii_lowercase)
 LevelTwo = list(string.ascii_letters)
 LevelThree = list(string.ascii_lowercase + string.digits)
@@ -13,29 +13,29 @@ LevelFive = list(string.ascii_letters + string.digits + string.punctuation)
 def clear():
   os.system("clear")
 
-def fileLen(fname): # Thanks to SilentGhost on StackOverflow, this finds the file's length.
+def fileLen(fname):
     with open(fname) as f:
         for i, l in enumerate(f):
             pass
     return i + 1
 
-def isPrime(n): # Thanks to Steven Rumbalski on StackOverflow as my code wasn't working :/
+def isPrime(n): 
     if n % 2 == 0 or n < 2: 
         return False
     return all(n % i for i in range(3, int(math.sqrt(n)) + 1, 2))
 
-def badHash(unhash): # Finally a function I made myself
-    customStuff = "åäöÅÄÖ" # Custom letters for me and my friends
-    badList = string.printable + customStuff # The entire list the BadHasher uses
-    values = {i:l for l,i in enumerate(badList, 1)} # Makes a dict with all printable characters but not the primes.
-    primeCount = 0 # A number to count primes and stuff
+def badHash(unhash): 
+    customStuff = "åäöÅÄÖ" 
+    badList = string.printable + customStuff
+    values = {i:l for l,i in enumerate(badList, 1)} 
+    primeCount = 0 
     for i in values:
       while True:
-        primeCount += 1 # Add 1 here because we don't want the same prime to pop up over and over again
+        primeCount += 1 
         if isPrime(primeCount): 
           break
       values[i] = primeCount
-    output = 1 # The output is 1 because multiplying something with 0 doesn't give you anything good.
+    output = 1 
     try:
         prodList = [values[letter] for letter in unhash]
         for number in prodList:
@@ -48,9 +48,9 @@ def badHash(unhash): # Finally a function I made myself
             else:
                 output -= values[unhash[i]]
     except KeyError or ValueError:
-        return "Invalid Characters" # This was really common before but then I learned how to use string.printable and other stuff so I fixed it.
-    output = hex(output) # Turn it into hex because it looks cool.
-    _, output = output.split("x") # Remove the "0x", probably better ways to do it but I'm lazy
+        return "Invalid Characters" 
+    output = hex(output) 
+    _, output = output.split("x")
     return output 
 
 while True:
@@ -68,7 +68,7 @@ while True:
             print("Enter the BadHash you want to break")
             breakHash = input(": ")
             try:
-              int(breakHash, 16) # This doesn't do much, just checks if it's a hexidecimal
+              int(breakHash, 16)
               break
             except ValueError:
               print("Needs to be a hexidecimal")
